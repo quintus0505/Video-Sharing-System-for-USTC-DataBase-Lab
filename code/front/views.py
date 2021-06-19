@@ -58,7 +58,7 @@ def login(request):
                 print("entered try")
                 #FoundPassword=cursor.execute("select user_password from WebUser where user_name='%s'" % (username))
                 if FoundPassword[0][0] == password:
-                    return redirect('/index/')
+                    return redirect('/add_book/')
                 else:
                     message = "密码不正确！"
             except:

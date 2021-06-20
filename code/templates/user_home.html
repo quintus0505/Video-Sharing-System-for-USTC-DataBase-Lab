@@ -25,11 +25,20 @@
     <h4>
         <p>video list</p>
         {% for video in user_videos %}
-        <p>{{video.video_name}}</p>
+        <p>{{video.video_name}},{{video.video_address}}</p>
         <tr>
-            <td><input type="submit" value="view"></td>
-            <td><input type="submit" value="delete"></td>
-            <td><input type="submit" value="download"></td>
+<!--            <td><input type="submit" value="view"></td>-->
+<!--            <td><input type="submit" value="delete"></td>-->
+<!--            <td><input type="submit" value="download"></td>-->
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="submit" name="delete" value="删除">
+            </form>
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="submit" name="view" value="查看">
+            </form>
+            <a href={{video.video_address}}><button>下载</button></a>
         </tr>
         <br>
         {% endfor %}

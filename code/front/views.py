@@ -39,6 +39,22 @@ def user_home(request):
             owner = request.session['user_id']
             user_videos=models.Video.objects.filter(user_id_id=owner)
             return render(request,'user_home.html',locals())
+        elif request.POST.get('view'):
+            print("entered view")
+            return render(request,'video.html',locals())
+        elif request.POST.get('delete'):
+            print("entered delete")
+            id=request.POST.get("id")
+            video=models.Video.objects.get(video_id=id)
+            user=request.session['user_id']
+            if user==1 or user==video.user_id:
+                print("delete enabled")
+                models.Video.objects.filter(video_id=id).delete();
+            else:
+                print("delete disabled")
+            owner = request.session['user_id']
+            user_videos=models.Video.objects.filter(user_id_id=owner)
+            return render(request,'user_home.html',locals())
         else:
             return render(request,'user_home.html',locals())
 

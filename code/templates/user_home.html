@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}UserPage{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h1> Hello,{{ request.session.user_name }}! Welcome Back!</h1>
+    {% endif %}
+    <form action="" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>视频名称</td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td>视频链接</td>
+                    <td><input type="text" name="address"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="upload" value="提交"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <h4>
+        <p>video list</p>
+        {% for video in user_videos %}
+        <p>{{video.video_name}}</p>
+        <tr>
+            <td><input type="submit" value="view"></td>
+            <td><input type="submit" value="delete"></td>
+            <td><input type="submit" value="download"></td>
+        </tr>
+        <br>
+        {% endfor %}
+    </h4>
+{% endblock %}

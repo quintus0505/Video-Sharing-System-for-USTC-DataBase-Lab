@@ -5,29 +5,42 @@ from django.shortcuts import redirect
 from django.shortcuts import reverse
 from . import models
 from .forms import UserForm
+
 def get_corsor():
     return connection.cursor()
 
 
 # Create your views here.
 def index(request):
-    cursor = get_corsor()
-    cursor.execute("select id,name,author from book")
-    books = cursor.fetchall()
-    return render(request, 'index.html', context={"books": books})
+    try:
+        if request.session['is_login']:
+            return redirect('/user_home/')
+    except:
+        return render(request, 'index.html')
 
 
-def add_book(request):
+def user_home(request):
     if request.method == 'GET':
-        return render(request,'add_book.html')
-    else:
-        name = request.POST.get("name")
-        author = request.POST.get("author")
-        book_id = random.randint(0, 1000)
-        cursor = get_corsor()
-        cursor.execute("insert into book(id,name,author) values('%d','%s','%s')" % (book_id,name,author))
+        owner = request.session['user_id']
+        user_videos=models.Video.objects.filter(user_id_id=owner)
+        return render(request,'user_home.html',locals())
+    elif request.method == 'POST':
+        print("fuck2")
+        if request.POST.get('upload'):
+            print("fuck")
+            name = request.POST.get("name")
+            address = request.POST.get("address")
+            owner = request.session['user_id']
+            new_video = models.Video.objects.create(user_id_id=owner)
+            new_video.video_name = name
+            new_video.video_address = address
+            new_video.save()
         # 跳转到首页
-        return redirect(reverse('index'))
+            owner = request.session['user_id']
+            user_videos=models.Video.objects.filter(user_id_id=owner)
+            return render(request,'user_home.html',locals())
+        else:
+            return render(request,'user_home.html',locals())
 
 
 def book_detail(request,book_id):
@@ -43,22 +56,35 @@ def delete_book(request):
         raise RuntimeError("删除图书的method错误！")
 
 def login(request):
+    if request.session.get('is_login',None):
+        return redirect('/user_home/')
     if request.method == "POST":
         login_form = UserForm(request.POST)
         message = "请检查填写的内容！"
         if login_form.is_valid():
             username = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
-            print ("fuck ",username,password)
-            cursor = get_corsor()
-            cursor.execute("select user_password from WebUser where user_name='%s'" % (username))
-            FoundPassword=cursor.fetchall()
-            print(FoundPassword[0][0])
+            # print ("fuck ",username,password)
+            # cursor = get_corsor()
+            # cursor.execute("select user_password from WebUser where user_name='%s'" % (username))
+            # FoundPassword=cursor.fetchall()
+            # cursor.execute("select user_id from WebUser where user_name='%s'" % (username))
+            # id=cursor.fetchall()
+            # print(FoundPassword[0][0])
+            user=models.WebUser.objects.get(user_name=username)
+            print(user)
+            print(user.user_password)
             try:
                 print("entered try")
                 #FoundPassword=cursor.execute("select user_password from WebUser where user_name='%s'" % (username))
-                if FoundPassword[0][0] == password:
-                    return redirect('/add_book/')
+                print(username)
+                user=models.WebUser.objects.get(user_name=username)
+                print(user)
+                if user.user_password == password:
+                    request.session['is_login']=True
+                    request.session['user_id']=user.user_id
+                    request.session['user_name']=user.user_name
+                    return redirect('/user_home/')
                 else:
                     message = "密码不正确！"
             except:
@@ -76,15 +102,21 @@ def register(request):
         if register_form.is_valid():
             username = register_form.cleaned_data['username']
             password = register_form.cleaned_data['password']
-            cursor = get_corsor()
-            cursor.execute("insert into WebUser(user_id,user_name,user_password) values('%d','%s','%s')" % (random.randint(0,1000),username,password))
-            print("execute achieved")
+            #cursor = get_corsor()
+            #cursor.execute("insert into WebUser(user_id,user_name,user_password) values('%d','%s','%s')" % (random.randint(0,1000),username,password))
+            #print("execute achieved")
+            new_user=models.WebUser.objects.create()
+            new_user.user_name=username
+            new_user.user_password=password
+            new_user.save()
         return render(request, 'register.html', locals())
 
     register_form = UserForm()
     return render(request, 'register.html')
 
 def logout(request):
-    pass
+    if not request.session.get('is_login',None):
+        return redirect("/index/")
+    request.session.flush()
     return redirect('/index/')
 

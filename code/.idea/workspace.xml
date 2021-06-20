@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="903933b5-7e21-44ee-bcd4-f332e4f3591d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../documents/Todo list.md" beforeDir="false" afterPath="$PROJECT_DIR$/../documents/Todo list.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../documents/requirement.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../documents/requirement.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/video_sharing/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/video_sharing/asgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/video_sharing/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/video_sharing/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/video_sharing/wsgi.py" beforeDir="false" />
-    </list>
+    <list default="true" id="903933b5-7e21-44ee-bcd4-f332e4f3591d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -27,9 +24,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -40,10 +40,22 @@
       <option name="presentableId" value="Default" />
       <updated>1624091499962</updated>
       <workItem from="1624091510249" duration="54000" />
+      <workItem from="1624104894100" duration="9069000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

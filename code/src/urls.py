@@ -17,12 +17,19 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path
 from front import views
-
+from django.conf.urls import url
+from django.contrib import admin
+from front import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('add_book/', views.add_book, name='add_book'),
     path('book_detail/', views.book_detail, name='book_detail'),
-    path('delete_book/',views.delete_book,name='delete_book')
+    path('delete_book/',views.delete_book,name='delete_book'),
+    url(r'^admin/',admin.site.urls),
+    url(r'^index/',views.index),
+    url(r'^login/',views.login),
+    url(r'^register',views.register),
+    url(r'^logout',views.logout)
 ]

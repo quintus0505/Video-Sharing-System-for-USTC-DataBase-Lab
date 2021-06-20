@@ -22,7 +22,11 @@ def index(request):
 def user_home(request):
     if request.method == 'GET':
         owner = request.session['user_id']
-        user_videos=models.Video.objects.filter(user_id_id=owner)
+        if owner==1:
+            user_videos=models.Video.objects.filter()
+        else:
+            user_videos=models.Video.objects.filter(user_id_id=owner)
+        shared_videos_id=models.Video.objects.filter(video_id in models.Share.objects.filter(user2_id_id=owner))
         return render(request,'user_home.html',locals())
     elif request.method == 'POST':
         print("fuck2")
@@ -41,7 +45,8 @@ def user_home(request):
             return render(request,'user_home.html',locals())
         elif request.POST.get('view'):
             print("entered view")
-            return render(request,'video.html',locals())
+            newurl='/video/'+request.POST.get("id")
+            return redirect(newurl,locals())
         elif request.POST.get('delete'):
             print("entered delete")
             id=request.POST.get("id")
@@ -55,12 +60,73 @@ def user_home(request):
             owner = request.session['user_id']
             user_videos=models.Video.objects.filter(user_id_id=owner)
             return render(request,'user_home.html',locals())
+        elif request.POST.get('share'):
+            print("entered share")
+            owner = request.session['user_id']
+            id=request.POST.get("id")
+            target_user=request.POST.get("user")
+            # origin_user=models.WebUser.objects.get(user_id=owner)
+            # origin_user_id=origin_user.user_id
+            # target_user=models.WebUser.objects.get(user_name=target_user)
+            # target_user_id=target_user.user_id
+            # print (origin_user_id,target_user_id,id)
+            # new_share=models.Share.objects.create(user1_id_id=origin_user_id,user2_id_id=target_user_id,video_id_id=id)
+            try:
+                origin_user=models.WebUser.objects.get(user_id=owner)
+                origin_user_id=origin_user.user_id
+                target_user=models.WebUser.objects.get(user_name=target_user)
+                print(1)
+                target_user_id=target_user.user_id
+                print(2)
+                new_share=models.Share.objects.create(user1_id_id=origin_user_id,user2_id_id=target_user_id,video_id_id=id)
+                print(3)
+                print("share saved")
+            except:
+                print("share failed")
+                message="分享出现错误，请检查目标用户名"
+            user_videos=models.Video.objects.filter(user_id_id=owner)
+            return render(request,'user_home.html',locals())
         else:
             return render(request,'user_home.html',locals())
 
+def view(request):
+    if request.method=='GET':
+        cur_url=str(request.path)
+        splited_url=cur_url.split('/')
+        id=splited_url[-1]
+        video=models.Video.objects.get(video_id=id)
+        comments=models.Comment.objects.filter(video_id_id=id)
+        return render(request,'video.html',locals())
+    else:
+        if request.POST.get('upload'):
+            print("fuck")
+            cur_url=str(request.path)
+            splited_url=cur_url.split('/')
+            id=splited_url[-1]
+            video=models.Video.objects.get(video_id=id)
+            comment = request.POST.get("comment")
+            owner = request.session['user_id']
+            new_comment = models.Comment.objects.create(user_id_id=owner,video_id_id=id)
+            new_comment.comment_word = comment
+            new_comment.save()
+            comments=models.Comment.objects.filter(video_id_id=id)
+        # 跳转到首页
+            return render(request,'video.html',locals())
+        else:
+            print("entered delete")
+            id=request.POST.get("id")
+            comment=models.Comment.objects.get(comment_id=id)
+            user=request.session['user_id']
+            if user==1 or user==comment.user_id:
+                print("delete enabled")
+                models.Comment.objects.filter(comment_id=id).delete();
+            else:
+                print("delete disabled")
+            owner = request.session['user_id']
+            comments=models.Comment.objects.filter(video_id_id=id)
+            return render(request,'video.html',locals())
 
-def book_detail(request,book_id):
-    pass
+
 
 def delete_book(request):
     if request.method == 'POST':

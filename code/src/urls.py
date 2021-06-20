@@ -25,11 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     url(r'^user_home/', views.user_home),
-    path('book_detail/', views.book_detail, name='book_detail'),
     path('delete_book/',views.delete_book,name='delete_book'),
     url(r'^index/',views.index),
     url(r'^login/',views.login),
     url(r'^register',views.register),
     url(r'^logout',views.logout),
-    url(r'^view',views.view)
+    url(r'^video/',views.view)
 ]

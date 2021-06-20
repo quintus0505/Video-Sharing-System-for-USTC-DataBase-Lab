@@ -38,7 +38,36 @@
                 <input type="hidden" name="id" value={{video.video_id}}>
                 <input type="submit" name="view" value="查看">
             </form>
+            <form action="" method="post">
+                <td>分享用户</td>
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="text" name="user">
+                <input type="submit" name="share" value="分享">
+            </form>
             <a href={{video.video_address}}><button>下载</button></a>
+        </tr>
+        <br>
+        {% endfor %}
+    </h4>
+    <h4>
+        <p>share list</p>
+        {% for share in shared_videos %}
+        <p>{{share.video_name}},{{share.video_address}}</p>
+        <tr>
+<!--            <td><input type="submit" value="view"></td>-->
+<!--            <td><input type="submit" value="delete"></td>-->
+<!--            <td><input type="submit" value="download"></td>-->
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{share.video_id}}>
+                <input type="submit" name="view" value="查看">
+            </form>
+            <form action="" method="post">
+                <td>分享用户</td>
+                <input type="hidden" name="id" value={{share.video_id}}>
+                <input type="text" name="user">
+                <input type="submit" name="share" value="分享">
+            </form>
+            <a href={{share.video_address}}><button>下载</button></a>
         </tr>
         <br>
         {% endfor %}

@@ -24,12 +24,11 @@ from front import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('add_book/', views.add_book, name='add_book'),
-    path('book_detail/', views.book_detail, name='book_detail'),
+    url(r'^user_home/', views.user_home),
     path('delete_book/',views.delete_book,name='delete_book'),
-    url(r'^admin/',admin.site.urls),
     url(r'^index/',views.index),
     url(r'^login/',views.login),
     url(r'^register',views.register),
-    url(r'^logout',views.logout)
+    url(r'^logout',views.logout),
+    url(r'^video/',views.view)
 ]

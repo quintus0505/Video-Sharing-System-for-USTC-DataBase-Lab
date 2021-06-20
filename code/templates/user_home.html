@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}UserPage{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h1> Hello,{{ request.session.user_name }}! Welcome Back!</h1>
+    {% endif %}
+    <form action="" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>视频名称</td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td>视频链接</td>
+                    <td><input type="text" name="address"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="upload" value="提交"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <h4>
+        <p>video list</p>
+        {% for video in user_videos %}
+        <p>{{video.video_name}},{{video.video_address}}</p>
+        <tr>
+<!--            <td><input type="submit" value="view"></td>-->
+<!--            <td><input type="submit" value="delete"></td>-->
+<!--            <td><input type="submit" value="download"></td>-->
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="submit" name="delete" value="删除">
+            </form>
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="submit" name="view" value="查看">
+            </form>
+            <form action="" method="post">
+                <td>分享用户</td>
+                <input type="hidden" name="id" value={{video.video_id}}>
+                <input type="text" name="user">
+                <input type="submit" name="share" value="分享">
+            </form>
+            <a href={{video.video_address}}><button>下载</button></a>
+        </tr>
+        <br>
+        {% endfor %}
+    </h4>
+    <h4>
+        <p>share list</p>
+        {% for share in shared_videos %}
+        <p>{{share.video_name}},{{share.video_address}}</p>
+        <tr>
+<!--            <td><input type="submit" value="view"></td>-->
+<!--            <td><input type="submit" value="delete"></td>-->
+<!--            <td><input type="submit" value="download"></td>-->
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{share.video_id}}>
+                <input type="submit" name="view" value="查看">
+            </form>
+            <form action="" method="post">
+                <td>分享用户</td>
+                <input type="hidden" name="id" value={{share.video_id}}>
+                <input type="text" name="user">
+                <input type="submit" name="share" value="分享">
+            </form>
+            <a href={{share.video_address}}><button>下载</button></a>
+        </tr>
+        <br>
+        {% endfor %}
+    </h4>
+{% endblock %}

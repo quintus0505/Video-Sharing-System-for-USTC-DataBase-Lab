@@ -1,18 +1,26 @@
-# login/models.py
-
+from __future__ import unicode_literals
 from django.db import models
 
-
 class WebUser(models.Model):
-    '''用户表'''
-    name = models.CharField(max_length=128, unique=True)
-    password = models.CharField(max_length=256)
-    c_time = models.DateTimeField(auto_now_add=True)
+    user_id=models.AutoField(primary_key=True)
+    user_name=models.CharField(max_length=30)
+    user_password=models.CharField(max_length=30)
 
-    def __str__(self):
-        return self.name
 
-    class Meta:
-        ordering = ['c_time']
-        verbose_name = '用户'
-        verbose_name_plural = '用户'
+class Video(models.Model):
+    video_id=models.AutoField(primary_key=True)
+    video_name=models.CharField(max_length=30)
+    video_address=models.CharField(max_length=30)
+    user_id=models.ForeignKey(to="WebUser",on_delete=models.CASCADE)
+
+class Comment(models.Model):
+    comment_id=models.AutoField(primary_key=True)
+    comment_word=models.CharField(max_length=30)
+    user_id=models.ForeignKey(to="WebUser",on_delete=models.CASCADE)
+    video_id=models.ForeignKey(to="Video",on_delete=models.CASCADE)
+
+class Share(models.Model):
+    share_id=models.AutoField(primary_key=True)
+    user1_id=models.ForeignKey(to="WebUser",on_delete=models.CASCADE,related_name='user1')
+    user2_id=models.ForeignKey(to="WebUser",on_delete=models.CASCADE,related_name='user2')
+    video_id=models.ForeignKey(to="Video",on_delete=models.CASCADE)

@@ -26,8 +26,18 @@ def user_home(request):
             user_videos=models.Video.objects.filter()
         else:
             user_videos=models.Video.objects.filter(user_id_id=owner)
-        shared_videos_id=models.Video.objects.filter(video_id in models.Share.objects.filter(user2_id_id=owner))
+
+        # shared_videos = models.Share.objects.filter(user2_id_id=owner)
+        print(owner)
+        shared_video_temp = models.Share.objects.filter(user2_id_id=owner).all()
+        shared_videos = []
+        for temp in shared_video_temp:
+            shared_videos.extend(list(models.Video.objects.filter(video_id=temp.video_id_id)))
+
+        print(shared_videos)
+
         return render(request,'user_home.html',locals())
+
     elif request.method == 'POST':
         print("fuck2")
         if request.POST.get('upload'):

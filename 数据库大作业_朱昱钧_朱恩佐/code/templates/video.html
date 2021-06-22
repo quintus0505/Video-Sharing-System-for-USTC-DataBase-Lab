@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}UserPage{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h1> Hello,{{ request.session.user_name }}! Welcome Back!</h1>
+    {% endif %}
+    <h1>{{ video.video_name }}</h1>
+    <form action="" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>评论</td>
+                    <td><input type="text" name="comment"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="upload" value="提交"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <h4>
+        <p>comment list</p>
+        {% for comment in comments %}
+        <p>{{comment.comment_word}},{{comment.user_id_id}}</p>
+        <tr>
+<!--            <td><input type="submit" value="view"></td>-->
+<!--            <td><input type="submit" value="delete"></td>-->
+<!--            <td><input type="submit" value="download"></td>-->
+            <form action="" method="post">
+                <input type="hidden" name="id" value={{comment.comment_id}}>
+                <input type="submit" name="delete" value="删除">
+            </form>
+        </tr>
+        <br>
+        {% endfor %}
+    </h4>
+{% endblock %}

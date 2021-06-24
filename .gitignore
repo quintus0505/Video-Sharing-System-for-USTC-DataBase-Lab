@@ -2,4 +2,4 @@ data/*
 gitignore/*
 .idea/*
 .vscode/*
-documents/private
+documents/private/*
